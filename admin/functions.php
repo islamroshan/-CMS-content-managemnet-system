@@ -174,13 +174,11 @@ function login_user($username,$password){
             $_SESSION['firstname'] =   $db_user_firstname;
             $_SESSION['lastname'] =   $db_user_lastname; 
             $_SESSION['user_role'] =   $db_user_role;
-            $_SESSION['password'] =   $db_user_password;
-    } else {
-           
-        } if($_SESSION['user_role'] == 'admin'){
+            $_SESSION['password'] =   $db_user_password; 
             
-       }else{
-        
-      }
+            header("Location: ../admin");
+    } else {
+           header("Location: ../index.php");
+        }
 }
 ?>

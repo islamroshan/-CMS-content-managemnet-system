@@ -75,7 +75,8 @@ if(isset($_POST['checkBoxArray'])){
             <th>Comment</th>
             <th>Dates</th>
             <th>Post Views</th>
-            <th>Action</th>
+            <th>Delete</th>
+            <th>Edit</th>
         </tr>
     </thead>
     <tbody>
@@ -140,12 +141,20 @@ $query .= "LEFT JOIN category ON posts.post_category_id  = category.cat_id ";
             echo "<td><a href='post_comments.php?id=$post_id'>$count_comments</a></td>";
             echo "<td>{$post_date}</td>";
             echo "<td><a href='post.php?reset={$post_id}'>{$post_views_count}</a></td>";
-            echo "<td><a href='post.php?source=edit_post&p_id={$post_id}'>Edit</a> / <a  href='post.php?delete={$post_id}'>Delete</a></td>";
+            ?>
+        
+            <form method="post">
+                <input type="hidden" name="post_id" value="<?php echo $post_id ; ?>" >
+                <?php echo '<td><input class="btn btn-danger"  type="submit" name="delete" value="Delete"></td>' ; ?>
+            </form>
+
+        <?php
+           echo "<td><a class='btn btn-primary' href='post.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
             echo "</tr>";
         }
         
-        if(isset($_GET['delete'])){
-            $the_post_id = $_GET['delete'];
+        if(isset($_POST['delete'])){
+            $the_post_id = $_POST['post_id'];
             $query = "DELETE FROM posts WHERE post_id = {$the_post_id}";
             $delete_query = mysqli_query($connection,$query);
             header("Location: post.php");

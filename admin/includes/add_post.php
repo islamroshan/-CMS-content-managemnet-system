@@ -27,8 +27,6 @@ if(isset($_POST['create_post'])) {
 }
 
 
-
-
 ?>
 
 

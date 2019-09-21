@@ -54,10 +54,12 @@
                             
                         }
                         if(empty($errors)){
-                                register_user($username,$email,$password);
+                            register_user($username,$email,$password);
+                          
+                            
                                
-                            }
-                        
+                         }
+                          header("Location: index.php");
                     }
                     ?>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
