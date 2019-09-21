@@ -5,6 +5,7 @@
     <!-- Navigation -->
     
     <?php  include "includes/navigation.php"; ?>
+ 
     
  
     <!-- Page Content -->
@@ -18,39 +19,7 @@
                 <h1>Register</h1>
                     <?php
                     if(isset($_POST['submit'])){
-                        $username = $_POST['username'];
-                        $email = $_POST['email'];
-                        $password = $_POST['password'];
-                        if(!empty($username) && !empty($password) && !empty($email)){
-                        $username = mysqli_real_escape_string($connection, $username);
-                        $email = mysqli_real_escape_string($connection, $email);
-                        $password = mysqli_real_escape_string($connection, $password);
-                         
-                        $password = password_hash($password,PASSWORD_BCRYPT,array('cost' => 12));
-                            
-                            
-//                        $query = "SELECT randSalt FROM users";
-//                        $select_randsalt_query = mysqli_query($connection,$query);
-//                        if(!$select_randsalt_query){
-//                            die("Query Failed" . mysqli_error($connection));
-//                         }
-//                        $row = mysqli_fetch_array($select_randsalt_query);
-//                        $salt = $row['randSalt'];
-//                        $password = crypt($password,$salt);
                         
-                        $query = "INSERT INTO users(username, user_email ,user_password, user_role) ";
-                        $query .= "VALUES('{$username}','{$email}','{$password}','subscriber' )";
-                        $registration_user_query =  mysqli_query($connection, $query);
-                        
-                        if(!$registration_user_query){
-                            die("Query Failed" . mysqli_error($connection) .  ' ' . mysqli_errno($connection));
-                        }
-                         $message = "Your Form Has Been Submitted";  
-                            echo $message;
-                      } else {
-                             $message ="Fields Can not be empty";
-                            echo $message;
-                        }
                     }
                     ?>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
