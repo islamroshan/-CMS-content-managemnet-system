@@ -18,25 +18,68 @@
                 <div class="form-wrap">
                 <h1>Register</h1>
                     <?php
-                    if(isset($_POST['submit'])){
+                    if($_SERVER['REQUEST_METHOD'] == "POST" ) {
+                        $username = trim($_POST['username']);
+                        $email = trim($_POST['email']);
+                        $password = trim($_POST['password']);
+                        
+                        $errors = [
+                            'username'=> '',
+                            'email' => '',
+                            'password' => ''
+                        ];
+                        if(strlen($username) < 4){
+                            $errors['username'] = 'Username Needs to be Longer';
+                        }
+                        if($username == ''){
+                            $errors['username'] = 'Username Cannot be Empty';
+                        }
+                        if(user_exits($username)){
+                            $errors['username'] = 'Username Exits Already';
+                        }
+                         if($email == ''){
+                            $errors['email'] = 'Email Cannot be Empty';
+                        }
+                        if(email_exits($email)){
+                            $errors['email'] = 'Email exits Already';
+                        }
+                        if($password == ''){
+                            $errors['password'] = 'Password Cannot be E mpty';
+                        }
+                        foreach($errors as $key => $value){
+                            //rest the values
+                            if(empty($value)){
+                               unset($errors[$key]);
+                            }
+                            
+                        }
+                        if(empty($errors)){
+                                register_user($username,$email,$password);
+                               
+                            }
                         
                     }
                     ?>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
+                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username"
+                            autocomplete="on" value="<?php echo isset($username) ? $username : '' ; ?>">
+                            <p class="text-danger"> <?php echo isset($errors['username']) ? $errors['username'] : '' ;  ?> </p>
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com"
+                             autocomplete="on" value="<?php echo isset($email) ? $email : '' ;  ?>">
+                              <p class="text-danger"> <?php echo isset($errors['email']) ? $errors['email'] : '' ;  ?> </p>
                         </div>
                          <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
                             <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                           <p class="text-danger"> <?php echo isset($errors['password']) ? $errors['password'] : '' ;  ?> </p>
                         </div>
                 
-                        <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
+                        <input  type="submit" name="register" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
                     </form>
                  
                 </div>
